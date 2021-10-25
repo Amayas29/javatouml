@@ -7,8 +7,8 @@ public class MethodSection extends Section {
 
 	private List<String> args;
 
-	public MethodSection(String visibility, String name, String type) {
-		super(visibility, name, type);
+	public MethodSection(String visibility, String name, String type, boolean abstractSection, boolean staticSection) {
+		super(visibility, name, type, abstractSection, staticSection);
 		args = new ArrayList<String>();
 	}
 
@@ -20,8 +20,16 @@ public class MethodSection extends Section {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(" ").append(PlantUml.getVisibilitySymbol(getVisibility())).append(" ").append(getType()).append(" ")
-				.append(getName()).append("(");
+		String ab = "";
+		if (isAbstractSection())
+			ab = "{abstract} ";
+
+		String st = "";
+		if (isStaticSection())
+			st = "{static} ";
+
+		sb.append(" ").append(PlantUml.getVisibilitySymbol(getVisibility())).append(" ").append(st).append(ab)
+				.append(getType()).append(" ").append(getName()).append("(");
 
 		for (int i = 0; i < args.size(); i++) {
 			sb.append(args.get(i));

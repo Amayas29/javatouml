@@ -9,8 +9,8 @@ public class ClassSection extends Section {
 	private String superClass;
 	private List<String> interfaces;
 
-	public ClassSection(String visibility, String name, String type) {
-		super(visibility, name, type);
+	public ClassSection(String name, boolean abstractSection) {
+		super("", name, "", abstractSection, false);
 
 		sections = new ArrayList<Section>();
 		interfaces = new ArrayList<>();
@@ -36,6 +36,10 @@ public class ClassSection extends Section {
 		String sup = "";
 		String inter = "";
 
+		String ab = "";
+		if (isAbstractSection())
+			ab = "abstract ";
+
 		if (superClass != null)
 			sup = "extends ".concat(superClass).concat(" ");
 
@@ -53,7 +57,7 @@ public class ClassSection extends Section {
 			inter = sbI.toString();
 		}
 
-		sb.append("class ").append(getName()).append(" ").append(sup).append(inter).append("{\n");
+		sb.append(ab).append("class ").append(getName()).append(" ").append(sup).append(inter).append("{\n");
 
 		for (Section section : sections)
 			sb.append(section.toString());
@@ -61,5 +65,17 @@ public class ClassSection extends Section {
 		sb.append("}\n");
 
 		return sb.toString();
+	}
+
+	public String getSuperClass() {
+		return superClass;
+	}
+
+	public List<Section> getSections() {
+		return sections;
+	}
+
+	public List<String> getInterfaces() {
+		return interfaces;
 	}
 }

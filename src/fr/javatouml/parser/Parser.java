@@ -11,18 +11,20 @@ import java.util.List;
 
 import fr.javatouml.plantuml.AttributSection;
 import fr.javatouml.plantuml.ClassSection;
+import fr.javatouml.plantuml.InterfaceSection;
 import fr.javatouml.plantuml.MethodSection;
+import fr.javatouml.plantuml.Section;
 
 public class Parser {
 
   private final String command = "npx prettier --print-width 9999999999999999999 --tab-width 4 --use-tabs true --trailing-comma none --write ";
 
   private String filename;
-  private List<ClassSection> classes;
+  private List<Section> sections;
 
   public Parser(String filename) {
     this.filename = filename;
-    classes = new ArrayList<>();
+    sections = new ArrayList<>();
   }
 
   private void format() {
@@ -42,16 +44,20 @@ public class Parser {
   }
 
   public void generateUml() {
-    ClassSection c = new ClassSection("public", "Test", "");
+    ClassSection c = new ClassSection("Test", true);
 
     c.addSuperClass("Objet");
     c.implementInterface("Mutable");
     c.implementInterface("Incremable");
 
-    c.addSection(new AttributSection("public", "a", "int"));
-    c.addSection(new MethodSection("private", "getA", "int"));
+    c.addSection(new AttributSection("public", "a", "int", true));
+    c.addSection(new MethodSection("private", "getA", "int", true, true));
 
-    classes.add(c);
+    sections.add(c);
+
+    InterfaceSection i = new InterfaceSection("Mutable");
+    i.addSection(new MethodSection("public", "getA", "int", false, false));
+    sections.add(i);
   }
 
   public void save(String output) {
@@ -59,7 +65,7 @@ public class Parser {
       StringBuilder sb = new StringBuilder();
       sb.append("@startuml\n");
 
-      for (ClassSection c : classes)
+      for (Section c : sections)
         sb.append(c.toString()).append("\n");
 
       sb.append("@enduml");
