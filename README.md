@@ -11,6 +11,7 @@ Convert java code to uml diagram
 
 - Output:
   - plantuml code
+  - a .png file that represents the uml diagram
 
 ## How to run
 
