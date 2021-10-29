@@ -1,0 +1,55 @@
+@startuml
+
+skinparam groupInheritance 2
+
+enum State {
+ EMPTY
+ FULL
+}
+
+class TestClass implements TestInterface {
+ + name : String 
+
+ # list : ArrayList<Object> 
+
+ - {static} cpt : int 
+
+ - id : int 
+
+ mutex : Object 
+
+ + ArrayList<Object> getList ()
+
+ + Object getMutex ()
+
+ + String getName ()
+
+ + int getId ()
+
+ + void setName (String name)
+
+ + String toString ()
+
+ - void doThing (int a, int b, Object... args)
+
+ + int compareTo (Object o)
+
+ + Object str (int index)
+
+}
+
+class OtherClass extends TestClass {
+ + String toString ()
+
+ + int compareTo (Object o)
+
+}
+
+interface TestInterface extends Comparable {
+ + Object str (int index)
+
+ + void print ()
+
+}
+
+@enduml

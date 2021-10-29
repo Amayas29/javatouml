@@ -12,7 +12,7 @@ public class JavaToUmlMain {
         }
 
         Parser parser = new Parser(args[0]);
-        parser.parse("test");
+        parser.parse(args[0].substring(0, args[0].length() - 5));
     }
 
 }
